@@ -15,7 +15,7 @@ void setup() {
 void loop() {
   M5.Lcd.setCursor(0, 20, 2);
   M5.Lcd.printf("Start Bluetooth");
-  bts.println("message from the M5stack");    //send message
+  bts.println("message from the M5stack");    // send message
   //Serial.println("loop");
   String str = bts.readString();              // recieve message
   M5.Lcd.setCursor(0, 60, 2);
