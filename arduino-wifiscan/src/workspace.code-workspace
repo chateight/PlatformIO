@@ -1,0 +1,21 @@
+{
+    "folders": [
+		{
+			"name": "220107-181208-m5stack-core-esp32",
+			"path": "../../220107-181208-m5stack-core-esp32"
+		},
+		{
+			"name": "220109-194847-arduino-wifiscan",
+			"path": ".."
+		},
+		{
+			"name": "220109-200745-m5stack-grey",
+			"path": "../../220109-200745-m5stack-grey"
+		}
+	],
+    "settings": {
+        "java.completion.enabled": false,
+        "java.debug.settings.enableRunDebugCodeLens": false,
+        "java.test.editor.enableShortcuts": false
+    }
+}
