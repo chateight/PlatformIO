@@ -1,0 +1,3 @@
+[submodule "servo"]
+	path = servo
+	url = http://github.com/chateight/PlatformIO
