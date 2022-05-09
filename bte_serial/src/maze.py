@@ -29,20 +29,6 @@ from tkinter import *
 from tkinter import messagebox
 Tk().wm_withdraw()
 
-
-def bt_data():          # communicate with M5stack
-    mes = "Game start"
-    # initialize bt serial, serial port depends on the running enviroment
-    m5data = serial.Serial('/dev/tty.ESP32test',115200, timeout=3)
-    # write to bt
-    m5data.write(mes.encode())
-    # read from bt and eliminate '\r\n'
-    line = m5data.readline().decode()[:-2:]
-    print(line)
-    m5data.close()
-    return line
-
-
 # プレイヤーの移動を確認 
 def check_key(key, maze):
     global px, py
