@@ -48,7 +48,7 @@ void loop()
   for(int i=0; i < 8*256; ++i)
   { 
     step(1);
-    delayMicroseconds(2000);
+    delayMicroseconds(2000);    // it does not work properly lower than 2 ms 
   }
   for(int i=0; i < 8*512; ++i)
   {
