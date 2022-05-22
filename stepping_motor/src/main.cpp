@@ -23,17 +23,7 @@ const int d_hs[8] = {   // 1-2 drive, 4096 cycles/turn ; gear ration 64:1
 
 int i = 0;
 
-void step(int d)  // d = -1 : anticlockwise, d = 1 : clockwise
-{
-  i += d;
-  if(i > 7) i = 0;
-  if(i < 0) i = 7;
-  byte b = d_hs[i];
-  digitalWrite(IN1, bitRead(b, 0));     // bit position 0 ; LSB
-  digitalWrite(IN2, bitRead(b, 1));
-  digitalWrite(IN3, bitRead(b, 2));
-  digitalWrite(IN4, bitRead(b, 3));
-}
+void step(int d);
 
 void setup()
 {
@@ -60,4 +50,16 @@ void loop()
     step(1);
     delayMicroseconds(2000);
   }
+}
+
+void step(int d)  // d = -1 : anticlockwise, d = 1 : clockwise
+{
+  i += d;
+  if(i > 7) i = 0;
+  if(i < 0) i = 7;
+  byte b = d_hs[i];
+  digitalWrite(IN1, bitRead(b, 0));     // bit position 0 ; LSB
+  digitalWrite(IN2, bitRead(b, 1));
+  digitalWrite(IN3, bitRead(b, 2));
+  digitalWrite(IN4, bitRead(b, 3));
 }
