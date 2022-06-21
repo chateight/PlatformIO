@@ -38,10 +38,9 @@ void setup() {
     M5.begin();             // Init M5Stack
     M5.Power.begin();       // Init power  
     M5.lcd.setTextSize(2);  // Set the text size to 2. 
-    M5.Lcd.setTextColor(BLACK);     // set font color to black
+    M5.Lcd.setTextColor(WHITE);     // set font color to white
     Wire.begin();           // Wire init, adding the I2C bus.  
     qmp6988.init();
-    M5.lcd.println(F("ENV Unit III test"));
 }
 
 void loop() {
@@ -54,7 +53,7 @@ void loop() {
     } else {
         tmp = 0, hum = 0;
     }
-    M5.lcd.fillScreen(WHITE);  // Fill the screen with white (to clear the screen).  
+    M5.lcd.fillScreen(BLACK);  // Fill the screen with white (to clear the screen).  
     M5.lcd.setCursor(0, 20);
     M5.Lcd.printf("Temp: %2.1f  \r\nHumi: %2.0f%%  \r\nPressure:%2.0fPa\r\n",
                   tmp, hum, pressure);
@@ -90,7 +89,7 @@ void loop() {
     }
     M5.lcd.setCursor(20, 120);
     M5.Lcd.printf("alarm_lv:%d", heat_alarm_value);
-    M5.Lcd.setTextColor(BLACK);
+    M5.Lcd.setTextColor(WHITE);
     M5.lcd.setTextSize(2);
     
     // battery level indication
