@@ -96,5 +96,6 @@ void loop() {
     int bat_level = read_batt();
     M5.Lcd.setCursor(20, 200);
     M5.Lcd.printf("batt : %3d %%",bat_level);
+    //Serial.print(heat_alarm_value);
     delay(2000);
 }
