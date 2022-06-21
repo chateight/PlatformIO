@@ -58,7 +58,7 @@ void loop() {
     M5.Lcd.printf("Temp: %2.1f  \r\nHumi: %2.0f%%  \r\nPressure:%2.0fPa\r\n",
                   tmp, hum, pressure);
     
-    // heat alarm caluc
+    // heat alarm calc
     int temp_int = (int)(tmp+0.5);              // four and five in
     int hum_five = (int)(hum + 2.5)/5*5;        // round to five
 
@@ -91,11 +91,11 @@ void loop() {
     M5.Lcd.printf("alarm_lv:%d", heat_alarm_value);
     M5.Lcd.setTextColor(WHITE);
     M5.lcd.setTextSize(2);
+    //Serial.print(heat_alarm_value);
     
     // battery level indication
     int bat_level = read_batt();
     M5.Lcd.setCursor(20, 200);
     M5.Lcd.printf("batt : %3d %%",bat_level);
-    //Serial.print(heat_alarm_value);
     delay(2000);
 }
