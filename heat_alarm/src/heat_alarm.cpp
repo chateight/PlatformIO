@@ -8,7 +8,7 @@ float tmp      = 0.0;
 float hum      = 0.0;
 float pressure = 0.0;
 
-int t_h_array[17][20] = {       // ↓:20 ~ 100 %rh(5% step), →:40 ~ 21 degree celsius
+int8_t t_h_array[17][20] = {       // ↓:20 ~ 100 %rh(5% step), →:40 ~ 21 degree celsius
     {29, 28, 28, 27, 26, 25, 25, 24, 23, 22, 21, 21, 20, 19, 18, 18, 17, 16, 15, 15},
     {30, 29, 28, 28, 27, 26, 25, 25, 24, 23, 22, 21, 21, 20, 19, 18, 18, 17, 16, 15},
     {31, 30, 29, 29, 28, 27, 26, 25, 25, 24, 23, 22, 21, 21, 20, 19, 18, 17, 17, 16},
@@ -55,8 +55,8 @@ void loop() {
     }
     M5.lcd.fillScreen(BLACK);  // Fill the screen with white (to clear the screen).  
     M5.lcd.setCursor(0, 20);
-    M5.Lcd.printf("Temp: %2.1f  \r\nHumi: %2.0f%%  \r\nPressure:%2.0fPa\r\n",
-                  tmp, hum, pressure);
+    M5.Lcd.printf("Temp: %2.1f  \r\nHumi: %2.0f%%  \r\nPressure:%.0fhPa\r\n",
+                  tmp, hum, pressure/100);
     
     // heat alarm calc
     int temp_int = (int)(tmp+0.5);              // four and five in
