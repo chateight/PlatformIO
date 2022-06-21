@@ -28,8 +28,6 @@ int t_h_array[17][20] = {
     {44, 43, 42, 41, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24}
 };
 
-int t_color[4] = {GREEN, YELLOW, ORANGE, RED};
-
 int read_batt()
 {
   int l_battery = M5.Power.getBatteryLevel();
