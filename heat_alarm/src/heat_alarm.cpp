@@ -7,7 +7,7 @@ QMP6988 qmp6988;
 float tmp      = 0.0;
 float hum      = 0.0;
 float pressure = 0.0;
-int16_t x_pos = 80;
+int16_t x_pos = 80;     // rectangular position & size setting
 int16_t y_pos = 80;
 int16_t width = 160;
 int16_t height =100;
