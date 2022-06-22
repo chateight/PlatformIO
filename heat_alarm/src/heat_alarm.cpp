@@ -93,7 +93,7 @@ void loop() {
     }
     M5.lcd.setTextSize(4);
     M5.Lcd.setTextColor(BLACK);
-    M5.lcd.setCursor(136, 114);
+    M5.lcd.setCursor(138, 116);
     M5.Lcd.printf("%d", heat_alarm_value);
     M5.lcd.setTextSize(2);
     M5.Lcd.setTextColor(WHITE);
