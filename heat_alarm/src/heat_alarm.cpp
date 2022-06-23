@@ -10,7 +10,7 @@ float pressure = 0.0;
 int16_t x_pos = 80;     // rectangular position & size setting
 int16_t y_pos = 80;
 int16_t width = 160;
-int16_t height =100;
+int16_t height = 100;
 
 int8_t t_h_array[17][20] = {       // ↓:20 ~ 100 %rh(5% step), →:40 ~ 21 degree celsius
     {29, 28, 28, 27, 26, 25, 25, 24, 23, 22, 21, 21, 20, 19, 18, 18, 17, 16, 15, 15},
@@ -38,32 +38,7 @@ int read_batt()
   return l_battery;
 }
 
-void setup() {
-    M5.begin();             // Init M5Stack
-    M5.Power.begin();       // Init power  
-    M5.lcd.setTextSize(2);  // Set the text size to 2. 
-    M5.Lcd.setTextColor(WHITE);     // set font color to white
-    Wire.begin();           // Wire init, adding the I2C bus.  
-    qmp6988.init();
-    M5.lcd.fillScreen(BLACK);  // Fill the screen with white (to clear the screen).  
-}
-
-void loop() {
-    pressure = qmp6988.calcPressure();
-    if (sht30.get() == 0) {  // Obtain the data of SHT30. 
-        tmp = sht30.cTemp;   // Store the temperature obtained from SHT30.
-                             // 
-        hum = sht30.humidity;  // Store the humidity obtained from the SHT30.
-                               // 
-    } else {
-        tmp = 0, hum = 0;
-    }
-    M5.lcd.fillScreen(BLACK);  // Fill the screen with white (to clear the screen).  
-    M5.lcd.setCursor(0, 20);
-    M5.Lcd.printf("Temp: %2.1f  \r\nHumi: %2.0f%%  \r\nPressure:%.0fhPa\r\n",
-                  tmp, hum, pressure/100);
-    
-    // heat alarm calc
+int heat_index_calc() {
     int temp_int = (int)(tmp+0.5);              // four and five in
     int hum_five = (int)(hum + 2.5)/5*5;        // round to five
 
@@ -91,17 +66,53 @@ void loop() {
     if (heat_alarm_value > 30 ){
         M5.Lcd.fillRect(x_pos, y_pos, width, height, RED);
     }
-    M5.lcd.setTextSize(4);
-    M5.Lcd.setTextColor(BLACK);
-    M5.lcd.setCursor(138, 116);
-    M5.Lcd.printf("%d", heat_alarm_value);
-    M5.lcd.setTextSize(2);
-    M5.Lcd.setTextColor(WHITE);
-    //Serial.print(heat_alarm_value);
+    return heat_alarm_value;
+}
+
+void setup() {
+    M5.begin();             // Init M5Stack
+    M5.Power.begin();       // Init power  
+    M5.lcd.setTextSize(2);  // Set the text size to 2. 
+    M5.Lcd.setTextColor(WHITE);     // set font color to white
+    Wire.begin();           // Wire init, adding the I2C bus.  
+    qmp6988.init();
+    M5.lcd.fillScreen(BLACK);  // Fill the screen with white (to clear the screen).  
+}
+
+void loop() {
+    pressure = qmp6988.calcPressure();
+    if (sht30.get() == 0) {  // Obtain the data of SHT30. 
+        tmp = sht30.cTemp;   // Store the temperature obtained from SHT30.
+                             // 
+        hum = sht30.humidity;  // Store the humidity obtained from the SHT30.
+                               // 
+
+        M5.lcd.fillScreen(BLACK);  // Fill the screen with white (to clear the screen).  
+        M5.lcd.setCursor(0, 20);
+        M5.Lcd.printf("Temp: %2.1f  \r\nHumi: %2.0f%%  \r\nPressure:%.0fhPa\r\n",
+                  tmp, hum, pressure/100);
     
-    // battery level indication
-    int bat_level = read_batt();
-    M5.Lcd.setCursor(85, 200);
-    M5.Lcd.printf("batt : %3d %%",bat_level);
-    delay(2000);
+        // heat alarm calc & display
+        int heat_alarm_value = heat_index_calc();
+        M5.lcd.setTextSize(4);
+        M5.Lcd.setTextColor(BLACK);
+        M5.lcd.setCursor(138, 116);
+        M5.Lcd.printf("%d", heat_alarm_value);
+        M5.lcd.setTextSize(2);
+        M5.Lcd.setTextColor(WHITE);
+        //Serial.print(heat_alarm_value);
+    
+        // battery level indication
+        int bat_level = read_batt();
+        M5.Lcd.setCursor(85, 200);
+        M5.Lcd.printf("batt : %3d %%",bat_level);
+        delay(2000);    
+    } 
+    else {
+        M5.lcd.fillScreen(BLACK);
+        M5.lcd.setCursor(50, 110);
+        M5.Lcd.setTextColor(RED);
+        M5.Lcd.print("sensor error");
+        M5.Lcd.setTextColor(WHITE);
+    }
 }
