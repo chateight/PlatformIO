@@ -76,7 +76,7 @@ void setup() {
     M5.Lcd.setTextColor(WHITE);     // set font color to white
     Wire.begin();           // Wire init, adding the I2C bus.  
     qmp6988.init();
-    M5.lcd.fillScreen(BLACK);  // Fill the screen with white (to clear the screen).  
+    M5.lcd.fillScreen(BLACK);  // Fill the screen with black (to clear the screen).  
 }
 
 void loop() {
