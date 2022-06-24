@@ -105,7 +105,7 @@ void loop() {
         int bat_level = read_batt();
         M5.Lcd.setCursor(85, 200);
         M5.Lcd.printf("batt : %3d %%",bat_level);
-        delay(2000);    
+        delay(5000);    
     } 
     else {
         M5.Lcd.setTextColor(RED);
