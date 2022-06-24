@@ -86,9 +86,8 @@ void loop() {
                              // 
         hum = sht30.humidity;  // Store the humidity obtained from the SHT30.
                                // 
-
-        M5.lcd.fillScreen(BLACK);  // Fill the screen with white (to clear the screen).  
         M5.lcd.setCursor(0, 20);
+        M5.lcd.fillScreen(BLACK);  // Fill the screen with black (to clear the screen).  
         M5.Lcd.printf("Temp: %2.1f  \r\nHumi: %2.0f%%  \r\nPressure:%.0fhPa\r\n",
                   tmp, hum, pressure/100);
     
@@ -109,9 +108,9 @@ void loop() {
         delay(2000);    
     } 
     else {
-        M5.lcd.fillScreen(BLACK);
-        M5.lcd.setCursor(50, 110);
         M5.Lcd.setTextColor(RED);
+        M5.lcd.setCursor(50, 110);
+        M5.lcd.fillScreen(BLACK);
         M5.Lcd.print("sensor error");
         M5.Lcd.setTextColor(WHITE);
     }
