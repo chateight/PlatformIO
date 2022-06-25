@@ -103,8 +103,8 @@ void loop() {
         // heat alarm calc & display
         heat_index_calc();
 
-        // altitude calc & disolay
-        int alt = (50 - ((int)pressure + 500)/2000)*200;    // set the resolution to 200m
+        // altitude calc & display
+        int alt = (int)(50 - (pressure - 1000)/2000)*200;    // set the resolution to 200m
         M5.Lcd.setCursor(85, 190);
         M5.Lcd.printf("altitude : %4d m",alt);
 
