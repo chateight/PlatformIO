@@ -104,14 +104,18 @@ void loop() {
         heat_index_calc();
 
         // altitude calc & disolay
-        int alt = (100 - ((int)pressure + 500)/1000)*100;
+        int alt = (50 - ((int)pressure + 500)/2000)*200;    // set the resolution to 200m
         M5.Lcd.setCursor(85, 190);
         M5.Lcd.printf("altitude : %4d m",alt);
 
         // battery level indication
         int bat_level = read_batt();
+        if (bat_level <= 25){
+            M5.Lcd.setTextColor(RED);
+        }
         M5.Lcd.setCursor(85, 210);
         M5.Lcd.printf("batt : %3d %%",bat_level);
+        M5.Lcd.setTextColor(WHITE);
         delay(5000);    
     } 
     else {
