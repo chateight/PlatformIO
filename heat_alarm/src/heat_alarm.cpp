@@ -7,10 +7,12 @@ QMP6988 qmp6988;
 float tmp      = 0.0;
 float hum      = 0.0;
 float pressure = 0.0;
-int16_t x_pos = 80;     // rectangular position & size setting
-int16_t y_pos = 80;
-int16_t width = 160;
-int16_t height = 100;
+uint8_t x_pos = 80;     // rectangular position & size setting
+uint8_t y_pos = 80;
+uint8_t width = 160;
+uint8_t height = 100;
+uint8_t char_off_h = 56;
+uint8_t char_off_v = 36;
 
 int8_t t_h_array[17][20] = {       // ↓:20 ~ 100 %rh(5% step), →:40 ~ 21 degree celsius
     {29, 28, 28, 27, 26, 25, 25, 24, 23, 22, 21, 21, 20, 19, 18, 18, 17, 16, 15, 15},
@@ -38,7 +40,7 @@ int read_batt()
   return l_battery;
 }
 
-int heat_index_calc() {
+void heat_index_calc() {
     int temp_int = (int)(tmp+0.5);              // four and five in
     int hum_five = (int)(hum + 2.5)/5*5;        // round to five
 
@@ -66,7 +68,13 @@ int heat_index_calc() {
     if (heat_alarm_value > 30 ){
         M5.Lcd.fillRect(x_pos, y_pos, width, height, RED);
     }
-    return heat_alarm_value;
+    M5.lcd.setTextSize(4);
+    M5.Lcd.setTextColor(BLACK);
+    M5.lcd.setCursor(x_pos + char_off_h, y_pos + char_off_v);
+    M5.Lcd.printf("%d", heat_alarm_value);
+    M5.lcd.setTextSize(2);
+    M5.Lcd.setTextColor(WHITE);
+    //Serial.print(heat_alarm_value);
 }
 
 void setup() {
@@ -80,6 +88,7 @@ void setup() {
 }
 
 void loop() {
+    qmp6988.init();
     pressure = qmp6988.calcPressure();
     if (sht30.get() == 0) {  // Obtain the data of SHT30. 
         tmp = sht30.cTemp;   // Store the temperature obtained from SHT30.
@@ -92,18 +101,16 @@ void loop() {
                   tmp, hum, pressure/100);
     
         // heat alarm calc & display
-        int heat_alarm_value = heat_index_calc();
-        M5.lcd.setTextSize(4);
-        M5.Lcd.setTextColor(BLACK);
-        M5.lcd.setCursor(138, 116);
-        M5.Lcd.printf("%d", heat_alarm_value);
-        M5.lcd.setTextSize(2);
-        M5.Lcd.setTextColor(WHITE);
-        //Serial.print(heat_alarm_value);
-    
+        heat_index_calc();
+
+        // altitude calc & disolay
+        int alt = (100 - ((int)pressure + 500)/1000)*100;
+        M5.Lcd.setCursor(85, 190);
+        M5.Lcd.printf("altitude : %4d m",alt);
+
         // battery level indication
         int bat_level = read_batt();
-        M5.Lcd.setCursor(85, 200);
+        M5.Lcd.setCursor(85, 210);
         M5.Lcd.printf("batt : %3d %%",bat_level);
         delay(5000);    
     } 
