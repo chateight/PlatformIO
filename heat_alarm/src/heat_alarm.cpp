@@ -104,7 +104,7 @@ void loop() {
         heat_index_calc();
 
         // altitude calc & display
-        int alt = (int)(50 - (pressure - 1000)/2000)*200;    // set the resolution to 200m
+        int alt = (int)(1013/20 - (pressure - 1000)/2000)*200;    // set the resolution to 200m
         M5.Lcd.setCursor(85, 190);
         M5.Lcd.printf("altitude : %4d m",alt);
 
