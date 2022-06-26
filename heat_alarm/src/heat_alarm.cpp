@@ -6,7 +6,8 @@ QMP6988 qmp6988;
 
 float tmp      = 0.0;
 float hum      = 0.0;
-float pressure = 0.0;
+float pressure = 0.0;               // Pa
+float ref_pressure = 1013.0;        // hPa
 uint8_t x_pos = 80;     // rectangular position & size setting
 uint8_t y_pos = 80;
 uint8_t width = 160;
@@ -104,7 +105,7 @@ void loop() {
         heat_index_calc();
 
         // altitude calc & display
-        int alt = (int)(1013/20 - (pressure - 1000)/2000)*200;    // set the resolution to 200m
+        int alt = (int)(ref_pressure/20 - (pressure - 1000)/2000)*200;    // set the resolution to 200m
         M5.Lcd.setCursor(85, 190);
         M5.Lcd.printf("altitude : %4d m",alt);
 
@@ -118,7 +119,7 @@ void loop() {
         M5.Lcd.setTextColor(WHITE);
         delay(5000);    
     } 
-    else {
+    else {                              // sensor error 
         M5.Lcd.setTextColor(RED);
         M5.lcd.setCursor(50, 110);
         M5.lcd.fillScreen(BLACK);
