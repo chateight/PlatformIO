@@ -43,7 +43,7 @@ int read_batt()
 
 void heat_index_calc() {
     int temp_int = (int)(tmp+0.5);              // four and five in
-    int hum_five = (int)((hum + 2.5)/5)*5;        // round to five
+    int hum_five = (int)((hum + 2.5)/5)*5;      // round to five
 
     if (temp_int > 40)
     {
