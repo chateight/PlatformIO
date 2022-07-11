@@ -1,3 +1,3 @@
 .DS_Store
-servo/
-ble/
+.gitignore
+.gitmodules
