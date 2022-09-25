@@ -8,4 +8,4 @@
 
 4. stepping_motor ; M5stack controls stepping motor
 
-5. temp/humidity/altitude sensor ; connect to the sensor via i2c 
+5. heat_alarm ; temp/humidity/altitude sensor is connect to the sensor via i2c 
