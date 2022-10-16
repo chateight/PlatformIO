@@ -25,6 +25,9 @@ SFEVL53L1X distanceSensor;
 //Uncomment the following line to use the optional shutdown and interrupt pins.
 //SFEVL53L1X distanceSensor(Wire, SHUTDOWN_PIN, INTERRUPT_PIN);
 
+const int port = 2;   // GPIO PORT
+const int dist_th = 200;
+
 int read_batt()
 {
   int l_battery = M5.Power.getBatteryLevel();
@@ -49,6 +52,9 @@ void setup(void)
     while (1);
   }
   Serial.println("Sensor online!");
+  // initialise the port
+  pinMode(port, OUTPUT);  
+  digitalWrite(port, LOW);
 }
 
 void loop(void)
@@ -68,11 +74,57 @@ void loop(void)
   M5.Lcd.setCursor(35, 100);
   M5.Lcd.printf("distance : %4d mm", distance);
 
+  // alarm externally
+  if(distance < dist_th){
+    digitalWrite(port, HIGH);
+    delay(1);
+    digitalWrite(port, LOW);
+  }
+
   float distanceInches = distance * 0.0393701;
   float distanceFeet = distanceInches / 12.0;
 
   Serial.print("\tDistance(ft): ");
   Serial.print(distanceFeet, 2);
+
+  int signalRate = distanceSensor.getSignalRate();
+  Serial.print("\tSignal rate: ");
+  Serial.print(signalRate);
+
+  byte rangeStatus = distanceSensor.getRangeStatus();
+  Serial.print("\tRange Status: ");
+
+  //Make it human readable
+  switch (rangeStatus)
+  {
+  case 0:
+    Serial.print("Good");
+    break;
+  case 1:
+    Serial.print("Sigma fail");
+    break;
+  case 2:
+    Serial.print("Signal fail");
+    break;
+  case 7:
+    Serial.print("Wrapped target fail");
+    break;
+  default:
+    Serial.print("Unknown: ");
+    Serial.print(rangeStatus);
+    break;
+  }
+  distanceSensor.setROI(16, 16, 199);
+  int roi_x = distanceSensor.getROIX();
+  int roi_y = distanceSensor.getROIY();
+  Serial.print("\tROI: ");
+  Serial.print(roi_x);
+  Serial.print(", ");
+  Serial.print(roi_y);
+  
+  int spad_n = distanceSensor.getSpadNb();
+  Serial.print("\tSpadNb: ");
+  Serial.print(spad_n);
 
   Serial.println();
 
@@ -84,5 +136,5 @@ void loop(void)
   M5.Lcd.setCursor(85, 210);
   M5.Lcd.printf("batt : %3d %%",bat_level);
   M5.Lcd.setTextColor(WHITE); 
-  delay(300);
-  } 
+  delay(100);
+}
