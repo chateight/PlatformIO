@@ -10,7 +10,7 @@
 
 5. heat_alarm ; temp/humidity/altitude sensor is connect to the sensor via i2c 
 
-6. laser_distance ; 53L4 driver and sample program,, but it doesm't work rightnow due to the initialise error
+6. laser_distance ; 53L4 driver and sample program,, but it doesm't work right now due to the initialise error
 
 7. laser_dist_01 ; 53L4 with 53L1 driver
 
