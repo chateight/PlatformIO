@@ -2,7 +2,7 @@
 
 1. arduino-wifiscan ; Wi-Fi ssid scan from M5stack sample program
 
-2. IMU_dev ; Using M5stack 9 axis sensor to keep standing position
+2. IMU_dev ; Distingush integrated IMU device
 
 3. bte_serial ; PyGame uses M5stack as a controller
 
